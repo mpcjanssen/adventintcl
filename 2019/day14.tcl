@@ -2,7 +2,10 @@ lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules [file dirname [info script]]/lib/cintcode
 package require util
 
-set data [split [read-input day14] \n];
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+
+set data [split [aoc::read-input 2019 14] \n];
 
 set ex1 [split {10 ORE => 10 A
 1 ORE => 1 B

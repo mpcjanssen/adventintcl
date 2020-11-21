@@ -3,7 +3,10 @@ tcl::tm::path add [file dirname [info script]]/modules
 package forget util
 package require util
 
-foreach l [read-input day06] {
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+
+foreach l [aoc::read-input 2019 6] {
     lassign [split $l )] around this
     set orbs($this) $around
 }

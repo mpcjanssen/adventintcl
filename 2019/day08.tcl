@@ -1,8 +1,10 @@
+
 lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules
 package require util
-
-set data [read-input day08]
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+set data [aoc::read-input 2019 8]
 
 set width 25
 set height 6
@@ -20,32 +22,47 @@ proc part1 {} {
 }
 
 proc visualize-step {} {
+  
   package require Tk
   wm geometry . 500x120
   canvas .c
   pack .c -fill both -expand 1
-  yield
+    foreach x [range 0 24] {
+      foreach y [range 0 5] {
+
+        set sx [expr {$x*20+10}]
+        set sy [expr {$y*20+10}]
+        set blocks($x,$y) [square .c $sx $sy 20 grey $x,$y]
+      }
+    }
+
+  parray blocks
   foreach l [lreverse $::layers] {
     set pixels [split $l {}]
+
     foreach x [range 0 24] {
       foreach y [range 0 5] {
         set col [lindex $pixels [expr {$y*25+$x}]]
         set sx [expr {$x*20+10}]
         set sy [expr {$y*20+10}]
+
         switch $col {
-          0 {square .c $sx $sy 20 black}
-          1 {square .c $sx $sy 20 white}
+          0 {.c itemconfigure $blocks($x,$y) -fill black}
+          1 {.c itemconfigure $blocks($x,$y) -fill white}
+
+        }
+
         }
       }
-    }
     # zoomcanvas .c 800 800 10
-    yield 1
+    update
   }
-  yield 0
 }
 
 proc visualize {} {
-  every 100 visualize-step
+  puts [time {
+  visualize-step }]
+  console show
   return
 }
 

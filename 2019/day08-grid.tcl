@@ -1,8 +1,10 @@
 lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules
+tcl::tm::path add [file dirname [info script]]/../modules
 package require util
+package require aoc
 
-set data [read-input day08]
+set data [aoc::read-input 2019 8]
 
 set width 25
 set height 6
@@ -27,7 +29,7 @@ proc visualize-step {} {
         set line {}
 
         foreach x [range 0 24] { 
-            lappend line [frame .f-$y-$x -width 10 -height 10]
+            lappend line [frame .f-$y-$x -width 20 -height 20]
         }
         lappend rows $line
     }
@@ -35,7 +37,7 @@ proc visualize-step {} {
     foreach row $rows {grid  {*}$row  -row $idx -sticky nsew; incr idx }
     grid columnconfigure . all -weight 1
     grid rowconfigure . all -weight 1
-    yield
+    
 
     foreach l [lreverse $::layers] {
         set pixels [split $l {}]
@@ -50,15 +52,15 @@ proc visualize-step {} {
         }
         # zoomcanvas .c 800 800 10
         update
-        yield 1
+        
     }
-    yield 0
+    
 }
 
 
 proc visualize {} {
-    coroutine v visualize-step
-    while {[v]} {}
+    puts [time {visualize-step}]
+    console show
 }
 
 proc part2 {} {

@@ -3,8 +3,10 @@ tcl::tm::path add [file dirname [info script]]/modules [file dirname [info scrip
 package require util
 package require cintcode
 package require intcode
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
 
-set program  [split [read-input day02] ,]
+set program  [split [aoc::read-input 2019 2] ,]
 interp alias {} Machine {} CintCode 
 
 proc runwithinput {program in1 in2} {

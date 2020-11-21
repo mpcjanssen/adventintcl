@@ -1,3 +1,9 @@
+lappend auto_path [file dirname [info script]]/lib
+tcl::tm::path add [file dirname [info script]]/modules [file dirname [info script]]/lib/cintcode
+package require util
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+
 
 proc init {varname} {
     upvar #0 $varname moon

@@ -2,8 +2,12 @@ lappend auto_path [file dirname [info script]]/lib {C:\Users\Mark\Src\site-tcl\l
 tcl::tm::path add [file dirname [info script]]/modules [file dirname [info script]]/lib/cintcode
 package require util
 package require cintcode
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
 
-set program  [split [read-input day17] ,]
+
+set program  [split [aoc::read-input 2019 17
+] ,]
 interp alias {} Machine {} CintCode 
 
 proc runresults {program} {

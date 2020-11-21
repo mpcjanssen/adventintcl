@@ -6,7 +6,9 @@ package forget intcode
 catch {rename IntCode {}}
 package require cintcode
 
-set program [split [read-input day15] ,]
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+set program [split [aoc::read-input 2019 15] ,]
 # puts $program
 
 

@@ -1,10 +1,12 @@
 lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules
+tcl::tm::path add [file dirname [info script]]/../modules
 package require util
 package require intcode
+package require aoc
 
 
-set data [read-input day03]
+set data [aoc::read-input 2019 3]
 
 
 

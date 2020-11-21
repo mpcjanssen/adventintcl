@@ -6,7 +6,10 @@ package forget intcode
 catch {rename IntCode {}}
 package require cintcode
 
-set program [split [read-input day07] ,]
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+
+set program [split [aoc::read-input 2019 7] ,]
 
 proc dosimul {phases} {
     set lastout 0

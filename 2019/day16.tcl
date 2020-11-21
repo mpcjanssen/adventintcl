@@ -4,7 +4,10 @@ package forget util
 package require util
 package require ffft
 
-set data [read-input day16]
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+set data [string trim [aoc::read-input 2019 16]]
+
 
 
 proc part1 {} {

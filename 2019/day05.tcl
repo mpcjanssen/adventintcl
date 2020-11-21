@@ -3,6 +3,9 @@ tcl::tm::path add [file dirname [info script]]/modules [file dirname [info scrip
 package require util
 package require cintcode
 
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
+
 proc ex1 {} {
     set machine [CintCode {1002 4 3 4 33}]
     $machine run
@@ -10,7 +13,7 @@ proc ex1 {} {
 }
 
 proc part1 {} {
-    set program [read-input day05]
+    set program [aoc::read-input 2019 5]
     set machine [CintCode [split $program , ]]
     $machine input 1
     $machine run
@@ -18,7 +21,7 @@ proc part1 {} {
 }
 
 proc part2 {} {
-    set program [read-input day05]
+    set program [aoc::read-input 2019 5]
     set machine [CintCode [split $program , ]]
     $machine input 5
     $machine run

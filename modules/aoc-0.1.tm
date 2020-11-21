@@ -1,4 +1,5 @@
 set scriptdir [file dirname [info script]]
+package require http
 package require twapi
 package require tdom
 http::register https 443 twapi::tls_socket

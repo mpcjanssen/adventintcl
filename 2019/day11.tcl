@@ -2,6 +2,8 @@ lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules [file dirname [info script]]/lib/cintcode
 package require util
 package require cintcode
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
 
 proc newdir {dx dy dir} {
     switch -exact [list $dx $dy $dir] {
@@ -17,7 +19,7 @@ proc newdir {dx dy dir} {
     }
 }
 
-set program [split [read-input day11] ,]
+set program [split [aoc::read-input 2019 11] ,]
 
 proc run {program start gridVar} {
     upvar $gridVar colors

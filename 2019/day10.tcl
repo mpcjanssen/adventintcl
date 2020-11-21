@@ -1,7 +1,9 @@
 tcl::tm::path add [file join . modules]
 package require util
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
 
-set data [read-input day10]
+set data [aoc::read-input 2019 10]
 set grid [lmap x [split $data \n]  {split $x {}}]
 set size [llength $grid]
 incr size -1

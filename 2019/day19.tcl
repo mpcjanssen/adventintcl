@@ -2,9 +2,11 @@ lappend auto_path [file dirname [info script]]/lib
 tcl::tm::path add [file dirname [info script]]/modules [file dirname [info script]]/lib/cintcode
 package require util
 package require cintcode
+tcl::tm::path add [file dirname [info script]]/../modules
+package require aoc
 
 
-set program [read-input day19]
+set program [aoc::read-input 2019 19]
 proc value {x y} {
 	    set machine [CintCode [split $::program ,]]
 	    $machine input $x
