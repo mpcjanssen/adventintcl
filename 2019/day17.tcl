@@ -6,8 +6,7 @@ tcl::tm::path add [file dirname [info script]]/../modules
 package require aoc
 
 
-set program  [split [aoc::read-input 2019 17
-] ,]
+set program  [split [aoc::read-input 2019 17] ,]
 interp alias {} Machine {} CintCode 
 
 proc runresults {program} {
@@ -69,3 +68,4 @@ tcl::mathop::+ {*}[lmap int $ints {lassign $int x y ; expr {$x*$y}}]
 
 
 
+proc part2 {} {}
