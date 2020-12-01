@@ -22,6 +22,7 @@ namespace eval aoc {
     set fname [file join input $day.txt]
     if {[file exists $fname]} {
         set f [open $fname]
+        fconfigure $f -encoding utf-8
         set data [read $f]
         close $f
         return $data
@@ -32,6 +33,7 @@ namespace eval aoc {
     set data [http::data $tok]
     http::cleanup $tok
     set f [open $fname w]
+    fconfigure $f -encoding utf-8
     puts -nonewline $f $data
     close $f
     return $data
