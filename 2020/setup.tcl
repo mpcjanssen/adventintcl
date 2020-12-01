@@ -3,3 +3,4 @@ tcl::tm::path add [file dirname [info script]]/modules
 tcl::tm::path add [file dirname [info script]]/../modules
 package forget aoc
 package require aoc
+namespace import tcl::mathop::*

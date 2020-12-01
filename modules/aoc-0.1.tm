@@ -19,12 +19,21 @@ namespace eval aoc {
     http::cleanup $tok
     }
     proc get-input {year day} {
-    incr part -1
+    set fname [file join input $day.txt]
+    if {[file exists $fname]} {
+        set f [open $fname]
+        set data [read $f]
+        close $f
+        return $data
+    } 
     set cookie session=$::env(SESSION)
 
     set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list Cookie $cookie ]]
     set data [http::data $tok]
     http::cleanup $tok
+    set f [open $fname w]
+    puts -nonewline $f $data
+    close $f
     return $data
     }
 
