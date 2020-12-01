@@ -5,7 +5,7 @@ package require tdom
 http::register https 443 twapi::tls_socket
 
 namespace eval aoc {
-    proc display-day {year day part} {
+        proc get-puzzle {year day part} {
     incr part -1
     set cookie session=$::env(SESSION)
 
@@ -18,7 +18,7 @@ namespace eval aoc {
 
     http::cleanup $tok
     }
-    proc input-day {year day} {
+    proc get-input {year day} {
     incr part -1
     set cookie session=$::env(SESSION)
 
@@ -28,19 +28,4 @@ namespace eval aoc {
     return $data
     }
 
-   proc read-input {year day} {
-       set fname $::scriptdir/../$year/input/$day.txt
-       if {[file exists $fname]} {
-            set f [open $fname]
-            set d [read $f]
-            close $f
-            return $d
-        } else {
-            set f [open $fname w]
-            set data [input-day $year $day]
-            puts -nonewline $f $data
-            close $f
-            return $data
-        }
-   }
 }

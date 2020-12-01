@@ -1,5 +1,4 @@
-lappend auto_path [file dirname [info script]]/lib
-tcl::tm::path add [file dirname [info script]]/modules
+source setup.tcl
 package require util
 
 set input [range 231832 767346]
