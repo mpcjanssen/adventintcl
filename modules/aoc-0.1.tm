@@ -14,6 +14,16 @@ catch {
 
 namespace eval aoc {
         proc get-puzzle {year day part} {
+            set fname [file join puzzles $day-$part.html]
+    if {[file exists $fname]} {
+        set f [open $fname]
+        fconfigure $f -encoding utf-8
+        set data [read $f]
+        close $f
+        puts stderr cached
+        jupyter::html $data
+        return
+    } 
     incr part -1
     set cookie session=$::env(SESSION)
 
@@ -23,12 +33,16 @@ namespace eval aoc {
     set html [[lindex [$doc selectNodes //article] $part] asHTML]
     rename $doc {}
     jupyter::html $html
-
+        set f [open $fname w]
+    fconfigure $f -encoding utf-8
+    puts -nonewline $f $html
+    close $f
     http::cleanup $tok
     }
     proc get-input {year day} {
     set fname [file join input $day.txt]
     if {[file exists $fname]} {
+        puts stderr cached
         set f [open $fname]
         fconfigure $f -encoding utf-8
         set data [read $f]
