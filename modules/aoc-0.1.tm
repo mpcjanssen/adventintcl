@@ -1,8 +1,16 @@
 set scriptdir [file dirname [info script]]
 package require http
-package require twapi
+
 package require tdom
-http::register https 443 twapi::tls_socket
+catch {
+    package require twapi
+    http::register https 443 twapi::tls_socket
+}
+
+catch {
+    package require tls
+    http::register https 443 tls::socket
+}
 
 namespace eval aoc {
         proc get-puzzle {year day part} {
