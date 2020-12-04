@@ -39,6 +39,15 @@ namespace eval aoc {
     close $f
     http::cleanup $tok
     }
+    
+    proc answer {year day part answer} {
+        set cookie session=$::env(SESSION)
+        set tok [http::geturl https://adventofcode.com/$year/day/$day/answer -headers [list Cookie $cookie ] -query [list level $part answer $answer]]
+        set html [http::data $tok]
+        parray $tok
+        http::cleanup $tok
+        jupyter::html $html
+    }
     proc get-input {year day} {
     set fname [file join input $day.txt]
     if {[file exists $fname]} {
