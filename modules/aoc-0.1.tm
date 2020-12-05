@@ -12,7 +12,27 @@ catch {
     http::register https 443 tls::socket
 }
 
+if {[info procs ::jupyter::html] eq {}} {
+   # Not running in jupyter
+   # define dummy jupyter commands
+   namespace eval jupyter {}
+   proc ::jupyter::display args {}
+   proc ::jupyter::html args {}
+   set intests 1
+   
+}
+
 namespace eval aoc {
+        proc results {} {
+             if {[info exists ::intests]} {
+                return [parts $::input]
+             } else {
+               set dt [time {lassign [parts $::input] result1 result2}]
+               puts "Day1\t$result1"
+               puts "Day2\t$result2"
+               puts $dt
+             }
+        }
         proc get-puzzle {year day part} {
             set fname [file join puzzles $day-$part.html]
     if {[file exists $fname]} {
@@ -20,7 +40,7 @@ namespace eval aoc {
         fconfigure $f -encoding utf-8
         set data [read $f]
         close $f
-        puts stderr cached
+        jupyter::display text/plain (cached)
         jupyter::html $data
         return
     } 
@@ -51,7 +71,7 @@ namespace eval aoc {
     proc get-input {year day} {
     set fname [file join input $day.txt]
     if {[file exists $fname]} {
-        puts stderr cached
+        jupyter::display text/plain (cached)
         set f [open $fname]
         fconfigure $f -encoding utf-8
         set data [read $f]
