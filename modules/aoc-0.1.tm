@@ -49,6 +49,10 @@ namespace eval aoc {
 
     set tok [http::geturl https://adventofcode.com/$year/day/$day -headers [list Cookie $cookie ]]
     set html [http::data $tok]
+    if {[http::status $tok] != 200} {
+        http::cleanup $tok
+        return -code error $html
+    }
     set doc [dom parse -html $html]
     set html [[lindex [$doc selectNodes //article] $part] asHTML]
     rename $doc {}
@@ -82,6 +86,10 @@ namespace eval aoc {
 
     set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list Cookie $cookie ]]
     set data [http::data $tok]
+        if {[http::status $tok] != 200} {
+        http::cleanup $tok
+        return -code error $data
+    }
     http::cleanup $tok
     set f [open $fname w]
     fconfigure $f -encoding utf-8
