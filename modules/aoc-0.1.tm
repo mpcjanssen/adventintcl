@@ -23,9 +23,14 @@ if {[info procs ::jupyter::html] eq {}} {
 }
 
 namespace eval aoc {
+        proc testresults {} {
+               set dt [time {lassign [parts $::input] result1 result2}]
+               puts $dt
+               return [list $result1 $result2]
+        }
         proc results {} {
              if {[info exists ::intests]} {
-                return [parts $::input]
+                return
              } else {
                set dt [time {lassign [parts $::input] result1 result2}]
                puts "Day1\t$result1"

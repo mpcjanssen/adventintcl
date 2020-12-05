@@ -3,7 +3,7 @@ namespace import ::tcltest::*
 
 source day05.tcl
 
-test parts {} -body {aoc::results} -result {947 636}
+test parts {} -body {aoc::testresults} -result {947 636}
 
 
 cleanupTests
