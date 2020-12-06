@@ -31,3 +31,5 @@ jupyter::display "text/plain" [string range $input 0 100]...;
         return [list $result1 $result2]
     }
     aoc::results
+
+

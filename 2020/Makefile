@@ -1,6 +1,6 @@
 .PHONY: all
 
-test: day04.tcl day05.tcl all.tcl
+test: day04.tcl day05.tcl day06.tcl all.tcl
 	tclsh all.tcl
 
 
