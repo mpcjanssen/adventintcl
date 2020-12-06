@@ -54,7 +54,7 @@ namespace eval aoc {
 
     set tok [http::geturl https://adventofcode.com/$year/day/$day -headers [list Cookie $cookie ]]
     set html [http::data $tok]
-    if {[http::status $tok] != 200} {
+    if {[http::status $tok] ne "ok"} {
         http::cleanup $tok
         return -code error $html
     }
@@ -91,7 +91,7 @@ namespace eval aoc {
 
     set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list Cookie $cookie ]]
     set data [http::data $tok]
-        if {[http::status $tok] != 200} {
+        if {[http::status $tok] ne "ok"} {
         http::cleanup $tok
         return -code error $data
     }
