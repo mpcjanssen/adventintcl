@@ -16,7 +16,7 @@ jupyter::display "text/plain" [string range $input 0 100]...;
             set answers  [lmap x [split $group \n] {split $x {}}]
             #puts $answers
             incr result1 [llength [struct::set union {*}$answers]]
-             incr result2 [llength [struct::set intersect {*}$answers]]
+            incr result2 [llength [struct::set intersect {*}$answers]]
             
         }
 
