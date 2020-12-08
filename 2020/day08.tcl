@@ -6,7 +6,8 @@ set input [aoc::get-input 2020 8]
 jupyter::html "<h2>Input</h2>"
 jupyter::display "text/plain" [string range $input 0 100]...;
 
-    proc handheld {program} {
+if 0 {
+proc handheld {program} {
         set hh {}
         set pos 0
         foreach {opc arg} $program {
@@ -46,7 +47,7 @@ jupyter::display "text/plain" [string range $input 0 100]...;
 
     proc parts input {
         set data  [string trim $input]
-        lassign [handheld $data] _ result1 hh
+        puts [time {lassign [handheld $data] _ result1 hh}]
         set result2 {}
         # only ops executed in the looping program are candidates for
         # replacement
@@ -57,6 +58,76 @@ jupyter::display "text/plain" [string range $input 0 100]...;
                 switch [lindex $modprogram $prog_idx] {
                     jmp {lset modprogram  $prog_idx nop}
                     nop {lset modprogram  $prog_idx jmp}
+                    default {continue}
+                }
+                
+                # puts $modprogram
+                lassign [handheld $modprogram] res acc
+                if {$res eq "done"} {set result2 $acc ; break}
+            }
+        }
+        return [list $result1 $result2]
+    }
+    aoc::results
+    }
+
+proc handheld {program} {
+        set hh [interp create]
+        $hh eval {
+            set executed {}
+            set pc 0
+            proc jmp num {
+                variable pc
+                incr pc $num
+            }
+            proc nop num {
+                variable pc
+                incr pc
+            }
+            proc acc num {
+                variable pc 
+                variable acc
+                incr acc $num
+                incr pc
+            }
+            proc run {program} {
+                variable pc
+                variable acc
+                variable executed
+                set size [llength $program]
+                while {$pc < $size} {
+                    if {[lsearch $executed $pc] != -1} {
+                        return [list inf $acc $executed]
+                    }
+                    lappend executed $pc
+                    # puts $executed
+                    {*}[lindex $program $pc]
+                }
+                return [list done $acc $executed]
+            }
+        }
+    
+        
+        set result [$hh eval [list run $program]]
+        
+        
+        
+        interp delete $hh
+        return $result
+        
+    }
+       proc parts input {
+        set data  [split [string trim $input] \n]
+        lassign [handheld $data] _ result1 executed
+        set result2 {}
+        # only ops executed in the looping program are candidates for
+        # replacement
+        while {$result2 eq {}} {
+            foreach candidate [lreverse $executed] {
+                set modprogram $data
+                switch [lindex $modprogram $candidate 0] {
+                    jmp {lset modprogram  $candidate 0 nop}
+                    nop {lset modprogram  $candidate 0 jmp}
                     default {continue}
                 }
                 
