@@ -22,7 +22,7 @@ foreach line $data {
         incr valid1
     }
 }
- return [list $valid1 $valid2]
+return [list $valid1 $valid2]
 }
 aoc::results
 
