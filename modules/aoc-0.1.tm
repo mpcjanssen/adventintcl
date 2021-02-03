@@ -2,6 +2,12 @@ set scriptdir [file dirname [info script]]
 package require http
 
 package require tdom
+
+set cookiefile [file join [file dirname [info script]] cookie.txt]
+set f [open $cookiefile]
+set cookie [read $f]
+close $f
+
 catch {
     package require twapi
     http::register https 443 twapi::tls_socket
@@ -50,9 +56,9 @@ namespace eval aoc {
         return
     } 
     incr part -1
-    set cookie session=$::env(SESSION)
+ 
 
-    set tok [http::geturl https://adventofcode.com/$year/day/$day -headers [list Cookie $cookie ]]
+    set tok [http::geturl https://adventofcode.com/$year/day/$day -headers [list Cookie $::cookie ]]
     set html [http::data $tok]
     if {[http::ncode $tok] ne 200} {
         http::cleanup $tok
@@ -70,15 +76,14 @@ namespace eval aoc {
     }
     
     proc answer {year day part answer} {
-        set cookie session=$::env(SESSION)
-        set tok [http::geturl https://adventofcode.com/$year/day/$day/answer -headers [list Cookie $cookie ] -query [list level $part answer $answer]]
+        set tok [http::geturl https://adventofcode.com/$year/day/$day/answer -headers [list Cookie $::cookie ] -query [list level $part answer $answer]]
         set html [http::data $tok]
         parray $tok
         http::cleanup $tok
         jupyter::html $html
     }
     proc get-input {year day} {
-    set fname [file join input $day.txt]
+    set fname [file join .. $year input $day.txt]
     if {[file exists $fname]} {
         jupyter::display text/plain (cached)
         set f [open $fname]
@@ -87,9 +92,8 @@ namespace eval aoc {
         close $f
         return $data
     } 
-    set cookie session=$::env(SESSION)
 
-    set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list Cookie $cookie ]]
+    set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list cookie $::cookie ]]
     set data [http::data $tok]
         if {[http::ncode $tok] ne 200} {
         http::cleanup $tok
