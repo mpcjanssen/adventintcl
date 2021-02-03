@@ -45,7 +45,7 @@ namespace eval aoc {
              }
         }
         proc get-puzzle {year day part} {
-            set fname [file join puzzles $day-$part.html]
+            set fname [file join .. $year puzzles $day-$part.html]
     if {[file exists $fname]} {
         set f [open $fname]
         fconfigure $f -encoding utf-8
