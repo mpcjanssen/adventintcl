@@ -106,5 +106,21 @@ namespace eval aoc {
     close $f
     return $data
     }
+    
+     proc permutations {list} {
+    set res [list [lrange $list 0 0]]
+    set posL {0 1}
+    foreach item [lreplace $list 0 0] {
+       set nres {}
+       foreach pos $posL {
+          foreach perm $res {
+             lappend nres [linsert $perm $pos $item]
+          }
+       }
+       set res $nres
+       lappend posL [llength $posL]
+    }
+    return $res
+ }
 
 }
