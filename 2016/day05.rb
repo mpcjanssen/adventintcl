@@ -1,11 +1,17 @@
 input = "ugkcyxxp"
 
 require 'digest'
-
-indexes =  (0..).lazy.select { |x|
-  Digest::MD5.hexdigest(input+x.to_s).start_with?("00000")
-}.take(8).to_a.map {|x| (Digest::MD5.hexdigest(input+x.to_s))[5]}.join("")
+i = 0
+indexes = []
+while true do
+  hash =   Digest::MD5.hexdigest(input+i.to_s)
+  i = i+1
+  indexes << hash if hash.start_with?("00000")
+  # p hash
+  break if indexes.length == 8
+end
 
 p indexes
+
 
 
