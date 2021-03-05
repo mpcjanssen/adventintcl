@@ -46,6 +46,7 @@ namespace eval aoc {
         }
         proc get-puzzle {year day part} {
             set fname [file join .. $year puzzles $day-$part.html]
+            file mkdir [file dirname $fname]
     if {[file exists $fname]} {
         set f [open $fname]
         fconfigure $f -encoding utf-8
@@ -84,6 +85,7 @@ namespace eval aoc {
     }
     proc get-input {year day} {
     set fname [file join .. $year input $day.txt]
+    file mkdir [file dirname $fname]
     if {[file exists $fname]} {
         jupyter::display text/plain (cached)
         set f [open $fname]
