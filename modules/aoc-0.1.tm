@@ -124,5 +124,15 @@ namespace eval aoc {
     }
     return $res
  }
+ proc neighbours8 {x y} {
+      subst { {[- $x 1] [- $y 1]}
+              {[- $x 1] $y}
+              {[- $x 1] [+ $y 1]}
+              {$x [- $y 1]}
+              {$x [+ $y 1]}
+              {[+ $x 1] [- $y 1]}
+              {[+ $x 1] $y}
+              {[+ $x 1] [+ $y 1]}}
+}
 
 }
