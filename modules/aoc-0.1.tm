@@ -76,13 +76,7 @@ namespace eval aoc {
     http::cleanup $tok
     }
     
-    proc answer {year day part answer} {
-        set tok [http::geturl https://adventofcode.com/$year/day/$day/answer -headers [list Cookie $::cookie ] -query [list level $part answer $answer]]
-        set html [http::data $tok]
-        parray $tok
-        http::cleanup $tok
-        jupyter::html $html
-    }
+
     proc get-input {year day} {
     set fname [file join .. $year input $day.txt]
     file mkdir [file dirname $fname]
@@ -95,7 +89,7 @@ namespace eval aoc {
         return $data
     } 
 
-    set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list cookie $::cookie ]]
+    set tok [http::geturl https://adventofcode.com/$year/day/$day/input -headers [list Cookie $::cookie ]]
     set data [http::data $tok]
         if {[http::ncode $tok] ne 200} {
         http::cleanup $tok
