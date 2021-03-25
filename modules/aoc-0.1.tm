@@ -128,5 +128,19 @@ namespace eval aoc {
               {[+ $x 1] $y}
               {[+ $x 1] [+ $y 1]}}
 }
+ proc combinations { list size } {
+     if { $size == 0 } {
+         return [list [list]]
+     }
+     set retval {}
+     for { set i 0 } { ($i + $size) <= [llength $list] } { incr i } {
+         set firstElement [lindex $list $i]
+         set remainingElements [lrange $list [expr { $i + 1 }] end]
+         foreach subset [combinations $remainingElements [expr { $size - 1 }]] {
+             lappend retval [linsert $subset 0 $firstElement]
+         }
+     }
+     return $retval
+ }
 
 }
