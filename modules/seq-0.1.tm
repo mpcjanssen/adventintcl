@@ -249,6 +249,7 @@ namespace eval seq {
 
     # Reduce the seq with f
     proc reduce {start f seq} {
+        checkseq $seq
         set result $start
         while 1 {
             set result [@ $f $result [$seq]]
