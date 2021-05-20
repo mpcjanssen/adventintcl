@@ -65,6 +65,7 @@ namespace eval aoc {
         http::cleanup $tok
         return -code error $html
     }
+    # puts $html
     set doc [dom parse -html $html]
     set html [[lindex [$doc selectNodes //article] $part] asHTML]
     rename $doc {}
