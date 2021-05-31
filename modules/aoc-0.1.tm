@@ -63,12 +63,19 @@ namespace eval aoc {
     set html [http::data $tok]
     if {[http::ncode $tok] ne 200} {
         http::cleanup $tok
-        return -code error $html
+        puts stderr $html
+        return
     }
     # puts $html
-    set doc [dom parse -html $html]
-    set html [[lindex [$doc selectNodes //article] $part] asHTML]
-    rename $doc {}
+    dom parse -html $html doc
+    set parthtml [lindex [$doc selectNodes //article] $part]
+    if {$parthtml eq {}} {
+        incr part
+        puts stderr "Part $part not available"
+        return
+    }
+    set html [$parthtml asHTML]
+
     jupyter::html $html
         set f [open $fname w]
     fconfigure $f -encoding utf-8
