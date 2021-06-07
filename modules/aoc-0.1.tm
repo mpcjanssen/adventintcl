@@ -136,6 +136,11 @@ namespace eval aoc {
               {[+ $x 1] $y}
               {[+ $x 1] [+ $y 1]}}
 }
+
+proc neighbours4 {x y} {
+      subst {{[- $x 1] $y} {$x [- $y 1]} {$x [+ $y 1]} {[+ $x 1] $y}}
+}
+
  proc combinations { list size } {
      if { $size == 0 } {
          return [list [list]]
