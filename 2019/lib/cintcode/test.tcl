@@ -1,4 +1,4 @@
-load cmake-build-debug/libcintcode.dll
+load bld/libcintcode.so
 
 catch {CintCode}
 
