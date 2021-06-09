@@ -316,11 +316,8 @@ int MD5_Cmd(ClientData cdata, Tcl_Interp * ip, int objc, Tcl_Obj * const objv[])
 
 
 DLLEXPORT int Md5c_Init(Tcl_Interp * interp) {
-    if (Tcl_InitStubs(interp, "8.6", 0) != TCL_OK) {
-      return TCL_ERROR;
-    };
-    if ( Tcl_CreateObjCommand(interp,"md5c", MD5_Cmd,NULL, NULL) != TCL_OK ) {
-      return TCL_ERROR;
-    }
+    Tcl_InitStubs(interp, "8.6", 0);
+    Tcl_CreateObjCommand(interp,"md5c", MD5_Cmd,NULL, NULL); 
+   
     return TCL_OK;
 }
