@@ -30,19 +30,30 @@ if {[info procs ::jupyter::html] eq {}} {
 
 namespace eval aoc {
         proc testresults {} {
-               set dt [time {lassign [parts $::input] result1 result2}]
-               puts $dt
+               set t1 [time {lassign [part1 $::input] result1}]
+               set t2 [time {lassign [part2 $::input] result2}]
+               
+               puts "Day1\t$result1 ($t1)"
+               puts "Day2\t$result2 ($t2)"
+               puts ===\n$t1\n$t2\n===
                return [list $result1 $result2]
         }
         proc results {} {
              if {[info exists ::intests]} {
                 return
              } else {
-               set dt [time {lassign [parts $::input] result1 result2}]
-               puts "Day1\t$result1"
-               puts "Day2\t$result2"
-               puts $dt
+               set t1 [lindex [time {lassign [part1 $::input] result1}] 0]
+               puts "Part1\t$result1 ($t1 ms)"
+               set t2 [lindex [time {lassign [part2 $::input] result2}] 0]
+               puts "Part2\t$result2 ($t2 ms)"
+        
              }
+             return [list $result1 $result2]
+        }
+        
+        proc parts {body} {
+            coroutine ::aoc::part1 apply [list {} $body]          
+            interp alias {} ::aoc::part2 {} ::aoc::part1
         }
         proc get-puzzle {year day part} {
             set fname [file join .. $year puzzles $day-$part.html]
